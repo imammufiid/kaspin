@@ -67,4 +67,11 @@ class ProductHelper(context: Context) {
     fun insert(values: ContentValues?): Long {
         return database.insert(DATABASE_TABLE, null, values)
     }
+
+    /**
+     * query update product
+     */
+    fun update(id: String, values: ContentValues?): Int {
+        return database.update(DATABASE_TABLE, values, "$_ID = ?", arrayOf(id))
+    }
 }
