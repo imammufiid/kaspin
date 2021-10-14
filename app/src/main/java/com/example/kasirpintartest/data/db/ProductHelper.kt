@@ -10,5 +10,14 @@ class ProductHelper(context: Context) {
 
     companion object {
         private const val DATABASE_TABLE = TABLE_NAME
+
+        /**
+         * This method for create instance ProductHelper class
+         */
+        private var instance: ProductHelper? = null
+        fun getInstance(context: Context): ProductHelper =
+            instance ?: synchronized(this) {
+                instance ?: ProductHelper(context)
+            }
     }
 }
