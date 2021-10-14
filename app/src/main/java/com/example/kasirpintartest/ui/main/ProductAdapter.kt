@@ -33,7 +33,7 @@ class ProductAdapter(private val onClick: (Product) -> Unit) :
         fun bind(data: Product) {
             with(binding) {
                 tvItemName.text = data.name
-                tvItemDate.text = data.date
+                tvItemCode.text = data.date
                 tvItemStock.text = data.stock.toString()
             }
         }

@@ -39,11 +39,11 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tv_item_date"
+                    android:id="@+id/tv_item_code"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start"
-                    android:text="@string/date"
+                    android:text="@string/code"
                     android:textSize="12sp" />
             </LinearLayout>
 
