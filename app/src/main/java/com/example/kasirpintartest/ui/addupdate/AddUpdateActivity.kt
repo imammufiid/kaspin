@@ -27,9 +27,8 @@ class AddUpdateActivity : AppCompatActivity(), View.OnClickListener {
     companion object {
         const val EXTRA_PRODUCT = "extra_note"
         const val EXTRA_POSITION = "extra_position"
-        const val RESULT_ADD = 101
+        const val RESULT_ADD = 301
         const val RESULT_UPDATE = 201
-        const val RESULT_DELETE = 301
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -107,12 +106,16 @@ class AddUpdateActivity : AppCompatActivity(), View.OnClickListener {
                     Toast.makeText(this, "Gagal mengupdate data", Toast.LENGTH_SHORT).show()
                 }
             } else {
+                val code = "BRG_${System.currentTimeMillis()}"
+
                 product?.date = getCurrentDate()
+                product?.code = code
+
                 values.put(DATE, getCurrentDate())
-                values.put(CODE, "BRG_${System.currentTimeMillis()}")
-                val result = productHelper.insert(values)
+                values.put(CODE, code)
+                val result = productHelper.insert(values).toInt()
                 if (result > 0) {
-                    product?.id = result.toInt()
+                    product?.id = result
                     setResult(RESULT_ADD, intent)
                     finish()
                 } else {
