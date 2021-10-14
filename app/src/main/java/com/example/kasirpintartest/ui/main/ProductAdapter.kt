@@ -6,15 +6,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.kasirpintartest.data.entity.Product
 import com.example.kasirpintartest.databinding.ProductItemLayoutBinding
 
-class ProductAdapter(private val onClick: (Product) -> Unit) :
+class ProductAdapter(private val onClick: (Product, Int) -> Unit) :
     RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
     var data = ArrayList<Product>()
-        set(data) {
-            if (data.size > 0) {
-                data.clear()
+    fun addData(data: List<Product>) {
+        this.data.apply {
+            clear()
+            if (data != null) {
+                addAll(data)
             }
-            data.addAll(data)
         }
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductAdapter.ViewHolder {
         val binding =
@@ -34,27 +37,22 @@ class ProductAdapter(private val onClick: (Product) -> Unit) :
             with(binding) {
                 tvItemName.text = data.name
                 tvItemCode.text = data.date
-                tvItemStock.text = data.stock.toString()
+                tvItemStock.text = "Stok: "+data.stock.toString()
+                btnEdit.setOnClickListener {
+                    onClick(data, adapterPosition)
+                }
             }
         }
     }
 
-//    fun addAll(data: List<Product>) {
-//        this.data.apply {
-//            this.clear()
-//            addAll(data)
-//        }
-//        notifyDataSetChanged()
-//    }
-
-    fun addItem(note: Product) {
-        this.data.add(note)
+    fun addItem(product: Product) {
+        this.data.add(product)
         notifyItemInserted(this.data.size - 1)
     }
 
-    fun updateItem(position: Int, note: Product) {
-        this.data[position] = note
-        notifyItemChanged(position, note)
+    fun updateItem(position: Int, product: Product) {
+        this.data[position] = product
+        notifyItemChanged(position, product)
     }
 
     fun removeItem(position: Int) {
