@@ -74,4 +74,11 @@ class ProductHelper(context: Context) {
     fun update(id: String, values: ContentValues?): Int {
         return database.update(DATABASE_TABLE, values, "$_ID = ?", arrayOf(id))
     }
+
+    /**
+     * query delete product
+     */
+    fun deleteById(id: String): Int {
+        return database.delete(DATABASE_TABLE, "$_ID = '$id'", null)
+    }
 }
