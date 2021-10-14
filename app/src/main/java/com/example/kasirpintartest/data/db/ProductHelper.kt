@@ -1,8 +1,10 @@
 package com.example.kasirpintartest.data.db
 
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import com.example.kasirpintartest.data.db.DatabaseContract.ProductColumns.Companion.TABLE_NAME
+import com.example.kasirpintartest.data.db.DatabaseContract.ProductColumns.Companion._ID
 import java.sql.SQLException
 
 class ProductHelper(context: Context) {
@@ -38,5 +40,14 @@ class ProductHelper(context: Context) {
         if (database.isOpen) {
             dataBaseHelper.close()
         }
+    }
+
+    /**
+     * get all products from db
+     */
+    fun queryAll(): Cursor {
+        return database.query(
+            DATABASE_TABLE, null, null, null, null, null, "$_ID ASC"
+        )
     }
 }
