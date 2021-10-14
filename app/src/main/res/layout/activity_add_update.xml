@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp">
         <EditText
-            android:id="@+id/edt_title"
+            android:id="@+id/edt_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/product_name"
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp">
         <EditText
-            android:id="@+id/edt_description"
+            android:id="@+id/edt_stock"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/stock"
