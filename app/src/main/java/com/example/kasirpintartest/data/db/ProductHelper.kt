@@ -1,5 +1,6 @@
 package com.example.kasirpintartest.data.db
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
@@ -58,5 +59,12 @@ class ProductHelper(context: Context) {
         return database.query(
             DATABASE_TABLE, null, "$_ID = ?", arrayOf(id), null, null, null, null
         )
+    }
+
+    /**
+     * query save product
+     */
+    fun insert(values: ContentValues?): Long {
+        return database.insert(DATABASE_TABLE, null, values)
     }
 }
