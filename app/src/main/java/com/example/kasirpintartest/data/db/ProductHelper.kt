@@ -3,6 +3,7 @@ package com.example.kasirpintartest.data.db
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import com.example.kasirpintartest.data.db.DatabaseContract.ProductColumns.Companion.TABLE_NAME
+import java.sql.SQLException
 
 class ProductHelper(context: Context) {
     private var dataBaseHelper: DatabaseHelper = DatabaseHelper(context)
@@ -19,5 +20,13 @@ class ProductHelper(context: Context) {
             instance ?: synchronized(this) {
                 instance ?: ProductHelper(context)
             }
+    }
+
+    /**
+     * open method is useful for opening database
+     */
+    @Throws(SQLException::class)
+    fun open() {
+        database = dataBaseHelper.writableDatabase
     }
 }
