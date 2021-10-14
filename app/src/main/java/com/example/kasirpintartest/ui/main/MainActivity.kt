@@ -30,14 +30,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.data != null) {
-            Log.d("MY_RESULT", result.data.toString())
             when (result.resultCode) {
                 AddUpdateActivity.RESULT_ADD -> {
                     val product =
-                        result.data?.getParcelableExtra<Product>(AddUpdateActivity.EXTRA_PRODUCT)
-                    if (product != null) {
-                        productAdapter.addItem(product)
-                    }
+                        result.data?.getParcelableExtra<Product>(AddUpdateActivity.EXTRA_PRODUCT) as Product
+                    productAdapter.addItem(product)
                     _bind.rvProducts.smoothScrollToPosition(productAdapter.itemCount - 1)
                     showSnackbarMessage("Satu item berhasil ditambahkan")
                 }
@@ -49,12 +46,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     productAdapter.updateItem(position, product)
                     _bind.rvProducts.smoothScrollToPosition(position)
                     showSnackbarMessage("Satu item berhasil diubah")
-                }
-                AddUpdateActivity.RESULT_DELETE -> {
-                    val position =
-                        result?.data?.getIntExtra(AddUpdateActivity.EXTRA_POSITION, 0) as Int
-                    productAdapter.removeItem(position)
-                    showSnackbarMessage("Satu item berhasil dihapus")
                 }
             }
         }
