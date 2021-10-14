@@ -17,9 +17,9 @@ internal class DatabaseHelper(context: Context): SQLiteOpenHelper(context, DATAB
         private const val SQL_CREATE_TABLE_PRODUCT = "CREATE TABLE $TABLE_NAME" +
                 " (${_ID} INTEGER PRIMARY KEY AUTOINCREMENT," +
                 " $CODE VARCHAR(50) NOT NULL UNIQUE," +
-                " $NAME VARCHAR(255)" +
-                " $STOCK INTEGER NOT NULL" +
-                " $DATE TEXT NOT NULL),"
+                " $NAME VARCHAR(255)," +
+                " $STOCK INTEGER NOT NULL," +
+                " $DATE TEXT NOT NULL)"
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
