@@ -7,4 +7,8 @@
     <string name="date">Date</string>
     <string name="button_add_product">Button add product</string>
     <string name="stock">Stock</string>
+    <string name="add">Tambah</string>
+    <string name="save">Simpan</string>
+    <string name="edit">Ubah</string>
+    <string name="update">Update</string>
 </resources>
