@@ -6,8 +6,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.kasirpintartest.data.entity.Product
 import com.example.kasirpintartest.databinding.ProductItemLayoutBinding
 
-class ProductAdapter(private val onClick: (Product, Int) -> Unit) :
+class ProductAdapter(private val onClick: (Product, Int, Int) -> Unit) :
     RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
+    companion object {
+        const val EDIT = 1
+        const val DELETE = 2
+    }
     var data = ArrayList<Product>()
     fun addData(data: List<Product>) {
         this.data.apply {
@@ -36,10 +40,13 @@ class ProductAdapter(private val onClick: (Product, Int) -> Unit) :
         fun bind(data: Product) {
             with(binding) {
                 tvItemName.text = data.name
-                tvItemCode.text = data.date
+                tvItemCode.text = data.code
                 tvItemStock.text = "Stok: "+data.stock.toString()
                 btnEdit.setOnClickListener {
-                    onClick(data, adapterPosition)
+                    onClick(data, adapterPosition, EDIT)
+                }
+                btnDelete.setOnClickListener {
+                    onClick(data, adapterPosition, DELETE)
                 }
             }
         }
