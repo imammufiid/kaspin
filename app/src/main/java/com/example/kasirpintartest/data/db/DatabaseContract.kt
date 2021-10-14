@@ -10,6 +10,7 @@ internal class DatabaseContract {
             const val CODE = "code"
             const val NAME = "name"
             const val STOCK = "stock"
+            const val DATE = "date"
         }
     }
 }
