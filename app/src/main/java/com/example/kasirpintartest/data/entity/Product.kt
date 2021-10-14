@@ -8,5 +8,6 @@ data class Product (
     val id: Int,
     val code: String,
     val name: String,
-    val stock: Int
+    val stock: Int,
+    var date: String?
 ): Parcelable
