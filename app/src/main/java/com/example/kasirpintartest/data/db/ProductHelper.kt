@@ -50,4 +50,13 @@ class ProductHelper(context: Context) {
             DATABASE_TABLE, null, null, null, null, null, "$_ID ASC"
         )
     }
+
+    /**
+     * query get product by ID
+     */
+    fun queryById(id: String): Cursor {
+        return database.query(
+            DATABASE_TABLE, null, "$_ID = ?", arrayOf(id), null, null, null, null
+        )
+    }
 }
