@@ -1,7 +1,8 @@
-package com.example.kasirpintartest
+package com.example.kasirpintartest.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.kasirpintartest.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
