@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">KasirPintarTest</string>
     <string name="stock_20">Stok: 20</string>
-    <string name="product_name">Product 1</string>
+    <string name="product_name">Product</string>
     <string name="submit">Submit</string>
     <string name="delete">Delete</string>
     <string name="date">Date</string>
