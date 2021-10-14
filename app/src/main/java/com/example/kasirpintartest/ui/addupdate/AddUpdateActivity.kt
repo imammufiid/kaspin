@@ -30,8 +30,6 @@ class AddUpdateActivity : AppCompatActivity(), View.OnClickListener {
         const val RESULT_ADD = 101
         const val RESULT_UPDATE = 201
         const val RESULT_DELETE = 301
-        const val ALERT_DIALOG_CLOSE = 10
-        const val ALERT_DIALOG_DELETE = 20
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,7 +82,7 @@ class AddUpdateActivity : AppCompatActivity(), View.OnClickListener {
         if (v?.id == R.id.btn_submit) {
             val name = _bind.edtName.text.toString().trim()
             val stock = _bind.edtStock.text.toString().trim()
-            if (title.isEmpty()) {
+            if (name.isEmpty()) {
                 _bind.edtName.error = "Field can not be blank"
                 return
             }
