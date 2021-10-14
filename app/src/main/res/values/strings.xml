@@ -5,4 +5,5 @@
     <string name="submit">Submit</string>
     <string name="delete">Delete</string>
     <string name="date">Date</string>
+    <string name="button_add_product">Button add product</string>
 </resources>
