@@ -22,4 +22,11 @@ class LocalDataSource(private val productHelper: ProductHelper) {
         productHelper.close()
         return result
     }
+
+    fun deleteProduct(product: Product): Int {
+        productHelper.open()
+         val result = productHelper.deleteById(product.id.toString()).toLong()
+        productHelper.close()
+        return result.toInt()
+    }
 }

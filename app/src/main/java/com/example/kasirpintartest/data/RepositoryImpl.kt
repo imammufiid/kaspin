@@ -21,4 +21,11 @@ class RepositoryImpl(private val local: LocalDataSource) : Repository {
         result.value = local
         return result
     }
+
+    override suspend fun deleteProduct(product: Product): LiveData<Int> {
+        val result = MutableLiveData<Int>()
+        val local = local.deleteProduct(product)
+        result.value = local
+        return result
+    }
 }

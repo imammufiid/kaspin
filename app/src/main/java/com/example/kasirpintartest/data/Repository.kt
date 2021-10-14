@@ -5,4 +5,5 @@ import com.example.kasirpintartest.data.entity.Product
 
 interface Repository {
     suspend fun getProducts(): LiveData<List<Product>>
+    suspend fun deleteProduct(product: Product): LiveData<Int>
 }
