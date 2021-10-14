@@ -29,4 +29,14 @@ class ProductHelper(context: Context) {
     fun open() {
         database = dataBaseHelper.writableDatabase
     }
+
+    /**
+     * close method is useful for closing database
+     */
+    fun close() {
+        dataBaseHelper.close()
+        if (database.isOpen) {
+            dataBaseHelper.close()
+        }
+    }
 }
