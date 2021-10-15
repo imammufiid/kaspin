@@ -23,4 +23,19 @@ object MappingHelper {
         }
         return productList
     }
+
+    fun mapCursorToProduct(productCursor: Cursor?): Product {
+        var product = Product()
+        productCursor?.apply {
+            while (moveToNext()) {
+                val id = getInt(getColumnIndexOrThrow(_ID))
+                val name = getString(getColumnIndexOrThrow(NAME))
+                val code = getString(getColumnIndexOrThrow(CODE))
+                val stock = getString(getColumnIndexOrThrow(STOCK)).toInt()
+                val date = getString(getColumnIndexOrThrow(DATE))
+                product = Product(id, code, name, stock, date)
+            }
+        }
+        return product
+    }
 }
