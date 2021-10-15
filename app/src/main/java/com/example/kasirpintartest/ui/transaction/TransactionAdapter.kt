@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.kasirpintartest.data.entity.Product
 import com.example.kasirpintartest.databinding.TransactionItemLayoutBinding
 
-
 class TransactionAdapter(private val onClick: (Product) -> Unit) :
     RecyclerView.Adapter<TransactionAdapter.ViewHolder>() {
     var data = ArrayList<Product>()
