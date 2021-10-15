@@ -17,3 +17,9 @@ data class ProductCheckout(
     var product: Product? = null,
     var qty: Int? = 0
 ): Parcelable
+
+@Parcelize
+data class Order(
+    var id: String? = null,
+    var product: List<ProductCheckout>? = null,
+): Parcelable
