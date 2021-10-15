@@ -25,6 +25,14 @@ class LocalDataSource(private val productHelper: ProductHelper) {
         return result
     }
 
+    fun productByID(id: String): Product {
+        productHelper.open()
+        val result = productHelper.queryById(id)
+        val map = MappingHelper.mapCursorToProduct(result)
+        productHelper.close()
+        return map
+    }
+
     fun deleteProduct(product: Product): Int {
         productHelper.open()
          val result = productHelper.deleteById(product.id.toString()).toLong()
