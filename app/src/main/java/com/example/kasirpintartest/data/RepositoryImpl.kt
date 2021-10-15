@@ -24,8 +24,29 @@ class RepositoryImpl(private val local: LocalDataSource) : Repository {
 
     override suspend fun deleteProduct(product: Product): LiveData<Int> {
         val result = MutableLiveData<Int>()
-        val local = local.deleteProduct(product)
-        result.value = local
+        val localResult = local.deleteProduct(product)
+        result.value = localResult
+        return result
+    }
+
+    override suspend fun updateStock(product: Product, qty: Int): LiveData<Int> {
+        val result = MutableLiveData<Int>()
+        val localResult = local.updateStock(product, qty)
+        result.value = localResult
+        return result
+    }
+
+    override suspend fun updateProduct(product: Product): LiveData<Int> {
+        val result = MutableLiveData<Int>()
+        val localResult = local.updateProduct(product)
+        result.value = localResult
+        return result
+    }
+
+    override suspend fun insertProduct(product: Product): LiveData<Long> {
+        val result = MutableLiveData<Long>()
+        val localResult = local.insertProduct(product)
+        result.value = localResult
         return result
     }
 }
