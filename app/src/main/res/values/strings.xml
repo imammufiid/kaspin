@@ -16,4 +16,16 @@
     <string name="qty">Jml: %d</string>
     <string name="transaction_success">Transaksi Berhasil</string>
     <string name="home">Home</string>
+    <string name="message_delete_product">Produk yang dipilih akan dihapus</string>
+    <string name="title_cancle_transaction">Transaksi Cancel</string>
+    <string name="no">Tidak</string>
+    <string name="yes">Ya</string>
+    <string name="checkout">Checkout(%d)</string>
+    <string name="delete_product">Hapus Product</string>
+    <string name="success_delete_product_message">Satu item berhasil dihapus</string>
+    <string name="failed_delete_product_message">Gagal menghapus data</string>
+    <string name="success_update_product_message">Satu item berhasil diubah</string>
+    <string name="success_insert_product_message">Satu item berhasil ditambahkan</string>
+    <string name="checkout_title">Checkout</string>
+    <string name="failed_transaction">Transaksi gagal</string>
 </resources>
