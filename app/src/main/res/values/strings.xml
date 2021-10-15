@@ -28,4 +28,6 @@
     <string name="success_insert_product_message">Satu item berhasil ditambahkan</string>
     <string name="checkout_title">Checkout</string>
     <string name="failed_transaction">Transaksi gagal</string>
+    <string name="order_id">Order</string>
+    <string name="not_available_data">Data kosong</string>
 </resources>
