@@ -1,5 +1,6 @@
 package com.example.kasirpintartest.ui.checkout
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -13,11 +14,18 @@ import com.example.kasirpintartest.data.entity.ProductCheckout
 import com.example.kasirpintartest.databinding.ActivityCheckoutBinding
 import com.example.kasirpintartest.ui.transactionsuccess.TransactionSuccessActivity
 import com.example.kasirpintartest.viewmodel.ViewModelFactory
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import java.text.SimpleDateFormat
+import java.util.*
 
 class CheckoutActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var _bind: ActivityCheckoutBinding
     private var products: List<ProductCheckout>? = null
     private lateinit var checkoutAdapter: CheckoutAdapter
+    private lateinit var progressDialog: ProgressDialog
+    private lateinit var dbRef: DatabaseReference
 
     companion object {
         const val PRODUCTS_EXTRAS = "products_extras"
@@ -38,6 +46,8 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener {
         _bind.btnSave.setOnClickListener(this)
 
         products = intent.getParcelableArrayListExtra(PRODUCTS_EXTRAS)
+        dbRef = FirebaseDatabase.getInstance().getReference("Orders")
+        progressDialog = ProgressDialog(this)
         initRV()
         observeVM()
     }
@@ -128,6 +138,26 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener {
                     }
                 }
             }
+            R.id.btn_save -> {
+                progressDialog.apply {
+                    setMessage("Save to database")
+                }.show()
+                val orderId = "ODR_${System.currentTimeMillis()}"
+                dbRef.child(orderId).setValue(products)
+                    .addOnCompleteListener {
+                        progressDialog.dismiss()
+                        showSnackbarMessage("Product saved in to firebase")
+                    }
+                    .addOnFailureListener {
+                        progressDialog.dismiss()
+                        it.message?.let { msg -> showSnackbarMessage(msg) }
+                    }
+            }
         }
     }
+
+    private fun showSnackbarMessage(message: String) {
+        Snackbar.make(_bind.rvProducts, message, Snackbar.LENGTH_SHORT).show()
+    }
+
 }
