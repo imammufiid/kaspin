@@ -31,7 +31,8 @@ class RepositoryImpl(private val local: LocalDataSource) : Repository {
 
     override suspend fun updateStock(product: Product, qty: Int): LiveData<Int> {
         val result = MutableLiveData<Int>()
-        val localResult = local.updateStock(product, qty)
+        val productID = local.productByID(product.id.toString())
+        val localResult = local.updateStock(productID, qty)
         result.value = localResult
         return result
     }
