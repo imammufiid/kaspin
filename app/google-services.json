@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1078218010755",
+    "project_id": "kaspintest-13347",
+    "storage_bucket": "kaspintest-13347.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1078218010755:android:d7131525991c3f2680ebb6",
+        "android_client_info": {
+          "package_name": "com.example.kasirpintartest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1078218010755-43uuhbfu3i7u8nvachs202qbuibp912m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJOEiFl-_aTuNF1pauf281BgFzIA35a6k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1078218010755-43uuhbfu3i7u8nvachs202qbuibp912m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
