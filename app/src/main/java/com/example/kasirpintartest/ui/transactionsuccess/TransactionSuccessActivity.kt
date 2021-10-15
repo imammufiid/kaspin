@@ -13,7 +13,7 @@ class TransactionSuccessActivity : AppCompatActivity() {
         setContentView(_bind.root)
 
         _bind.btnHome.setOnClickListener {
-
+            finish()
         }
     }
 }
