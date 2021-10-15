@@ -13,6 +13,7 @@ import com.example.kasirpintartest.R
 import com.example.kasirpintartest.data.entity.ProductCheckout
 import com.example.kasirpintartest.databinding.ActivityTransactionBinding
 import com.example.kasirpintartest.ui.checkout.CheckoutActivity
+import com.example.kasirpintartest.ui.order.OrderActivity
 import com.example.kasirpintartest.viewmodel.ViewModelFactory
 
 class TransactionActivity : AppCompatActivity(), View.OnClickListener {
@@ -104,6 +105,8 @@ class TransactionActivity : AppCompatActivity(), View.OnClickListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.order_menu -> {
+                startActivity(Intent(this, OrderActivity::class.java))
+                finish()
                 return true
             }
         }
@@ -118,6 +121,7 @@ class TransactionActivity : AppCompatActivity(), View.OnClickListener {
                         CheckoutActivity.PRODUCTS_EXTRAS,
                         productCheckout as ArrayList<ProductCheckout>
                     )
+                    putExtra(CheckoutActivity.IS_LOCAL, true)
                 })
                 finish()
             }
