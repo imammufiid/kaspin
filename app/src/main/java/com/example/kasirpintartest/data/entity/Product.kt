@@ -10,4 +10,10 @@ data class Product(
     var name: String? = null,
     var stock: Int? = null,
     var date: String? = null
+) : Parcelable
+
+@Parcelize
+data class ProductCheckout(
+    var product: Product? = null,
+    var qty: Int? = 0
 ): Parcelable
