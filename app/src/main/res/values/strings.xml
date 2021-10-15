@@ -12,4 +12,8 @@
     <string name="edit">Ubah</string>
     <string name="update">Update</string>
     <string name="code">code123</string>
+    <string name="transaction">Transaksi</string>
+    <string name="qty">Jml: %d</string>
+    <string name="transaction_success">Transaksi Berhasil</string>
+    <string name="home">Home</string>
 </resources>
