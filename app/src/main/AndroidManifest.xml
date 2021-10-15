@@ -9,16 +9,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.KasirPintarTest">
-        <activity android:name=".ui.addupdate.AddUpdateActivity"
-            android:parentActivityName=".ui.main.MainActivity"/>
-        <activity android:name=".ui.main.MainActivity"
-            android:launchMode="singleTop">
+        <activity android:name=".ui.transactionsuccess.TransactionSuccessActivity"></activity>
+        <activity android:name=".ui.checkout.CheckoutActivity" />
+        <activity android:name=".ui.home.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.order.OrderActivity" />
+        <activity android:name=".ui.transaction.TransactionActivity" />
+        <activity
+            android:name=".ui.addupdate.AddUpdateActivity"
+            android:parentActivityName=".ui.main.MainActivity" />
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:launchMode="singleTop" />
     </application>
 
 </manifest>
