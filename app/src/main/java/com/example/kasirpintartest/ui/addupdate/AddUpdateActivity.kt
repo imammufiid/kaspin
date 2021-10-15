@@ -6,18 +6,21 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import com.example.kasirpintartest.R
 import com.example.kasirpintartest.data.db.DatabaseContract
-import com.example.kasirpintartest.data.db.DatabaseContract.ProductColumns.Companion.CODE
-import com.example.kasirpintartest.data.db.DatabaseContract.ProductColumns.Companion.DATE
 import com.example.kasirpintartest.data.db.ProductHelper
 import com.example.kasirpintartest.data.entity.Product
 import com.example.kasirpintartest.databinding.ActivityAddUpdateBinding
+import com.example.kasirpintartest.viewmodel.ViewModelFactory
 import java.text.SimpleDateFormat
 import java.util.*
 
 class AddUpdateActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var _bind: ActivityAddUpdateBinding
+    private val viewModel by lazy {
+        ViewModelProvider(this, ViewModelFactory.getInstance(this))[AddUpdateViewModel::class.java]
+    }
 
     private var isEdit = false
     private var product: Product? = null
@@ -42,8 +45,29 @@ class AddUpdateActivity : AppCompatActivity(), View.OnClickListener {
         product = intent.getParcelableExtra(EXTRA_PRODUCT)
         isEditProduct()
         setupActionBar()
+        observeVM()
 
         _bind.btnSubmit.setOnClickListener(this)
+    }
+
+    private fun observeVM() {
+        viewModel.updated.observe(this, { result ->
+            if (result > 0) {
+                setResult(RESULT_UPDATE, intent)
+                finish()
+            } else {
+                Toast.makeText(this, "Gagal mengupdate data", Toast.LENGTH_SHORT).show()
+            }
+        })
+        viewModel.inserted.observe(this, { result ->
+            if (result > 0) {
+                product?.id = result.toInt()
+                setResult(RESULT_ADD, intent)
+                finish()
+            } else {
+                Toast.makeText(this, "Gagal menambah data", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     private fun setupActionBar() {
@@ -89,38 +113,22 @@ class AddUpdateActivity : AppCompatActivity(), View.OnClickListener {
             product?.stock = stock.toInt()
             val intent = Intent().apply {
                 putExtra(EXTRA_PRODUCT, product)
-                putExtra(EXTRA_POSITION, position)
-            }
-
-            val values = ContentValues().apply {
-                put(DatabaseContract.ProductColumns.NAME, name)
-                put(DatabaseContract.ProductColumns.STOCK, stock)
             }
 
             if (isEdit) {
-                val result = productHelper.update(product?.id.toString(), values).toLong()
-                if (result > 0) {
-                    setResult(RESULT_UPDATE, intent)
-                    finish()
-                } else {
-                    Toast.makeText(this, "Gagal mengupdate data", Toast.LENGTH_SHORT).show()
-                }
+                intent.putExtra(EXTRA_POSITION, position)
+                val updateProduct = Product(id = product?.id, name = name, stock = stock.toInt())
+                viewModel.updateProduct(updateProduct)
+
             } else {
                 val code = "BRG_${System.currentTimeMillis()}"
+                val date = getCurrentDate()
 
-                product?.date = getCurrentDate()
+                product?.date = date
                 product?.code = code
 
-                values.put(DATE, getCurrentDate())
-                values.put(CODE, code)
-                val result = productHelper.insert(values).toInt()
-                if (result > 0) {
-                    product?.id = result
-                    setResult(RESULT_ADD, intent)
-                    finish()
-                } else {
-                    Toast.makeText(this, "Gagal menambah data", Toast.LENGTH_SHORT).show()
-                }
+                product?.let { viewModel.insertProduct(it) }
+
             }
         }
     }
