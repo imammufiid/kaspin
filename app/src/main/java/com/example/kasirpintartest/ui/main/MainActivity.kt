@@ -3,7 +3,6 @@ package com.example.kasirpintartest.ui.main
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -26,7 +25,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         ViewModelProvider(this, ViewModelFactory.getInstance(this))[MainViewModel::class.java]
     }
 
-    private val resultLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
+    val resultLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.data != null) {
@@ -36,7 +35,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                         result.data?.getParcelableExtra<Product>(AddUpdateActivity.EXTRA_PRODUCT) as Product
                     productAdapter.addItem(product)
                     _bind.rvProducts.smoothScrollToPosition(productAdapter.itemCount - 1)
-                    showSnackbarMessage("Satu item berhasil ditambahkan")
+                    showSnackbarMessage(getString(R.string.success_insert_product_message))
                 }
                 AddUpdateActivity.RESULT_UPDATE -> {
                     val product =
@@ -45,7 +44,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                         result?.data?.getIntExtra(AddUpdateActivity.EXTRA_POSITION, 0) as Int
                     productAdapter.updateItem(position, product)
                     _bind.rvProducts.smoothScrollToPosition(position)
-                    showSnackbarMessage("Satu item berhasil diubah")
+                    showSnackbarMessage(getString(R.string.success_update_product_message))
                 }
             }
         }
@@ -82,10 +81,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         })
         viewModel.deleted.observe(this, { result ->
             if (result > 0) {
-                showSnackbarMessage("Satu item berhasil dihapus")
+                showSnackbarMessage(getString(R.string.success_delete_product_message))
                 productAdapter.removeItem(position)
             } else {
-                showSnackbarMessage("Gagal menghapus data")
+                showSnackbarMessage(getString(R.string.failed_delete_product_message))
             }
         })
     }
@@ -101,16 +100,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 resultLauncher.launch(intent)
             } else if (status == ProductAdapter.DELETE) {
                 this.position = position
-                val dialogMessage = "Apakah anda yakin ingin menghapus item ini?"
-                val dialogTitle = "Hapus Product"
+                val dialogMessage = getString(R.string.message_delete_product)
+                val dialogTitle = getString(R.string.delete_product)
 
                 val alertDialogBuilder = AlertDialog.Builder(this)
                 alertDialogBuilder.setTitle(dialogTitle)
                 alertDialogBuilder
                     .setMessage(dialogMessage)
                     .setCancelable(false)
-                    .setNegativeButton("Tidak") { dialog, _ -> dialog.cancel() }
-                    .setPositiveButton("Ya") { _, _ ->
+                    .setNegativeButton(getString(R.string.no)) { dialog, _ -> dialog.cancel() }
+                    .setPositiveButton(getString(R.string.yes)) { _, _ ->
                         viewModel.deleteProduct(product)
                     }
                 val alertDialog = alertDialogBuilder.create()
