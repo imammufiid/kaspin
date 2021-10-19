@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.databinding.DataBindingUtil
 import com.example.kasirpintartest.R
 import com.example.kasirpintartest.databinding.ActivityHomeBinding
 import com.example.kasirpintartest.ui.main.MainActivity
@@ -14,8 +15,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _bind = ActivityHomeBinding.inflate(layoutInflater)
-        setContentView(_bind.root)
+        _bind = DataBindingUtil.setContentView(this, R.layout.activity_home)
 
         _bind.btnProduct.setOnClickListener(this)
         _bind.btnTransaction.setOnClickListener(this)
