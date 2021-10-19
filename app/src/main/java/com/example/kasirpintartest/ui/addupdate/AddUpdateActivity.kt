@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.kasirpintartest.R
 import com.example.kasirpintartest.data.db.DatabaseContract
@@ -36,8 +37,7 @@ class AddUpdateActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _bind = ActivityAddUpdateBinding.inflate(layoutInflater)
-        setContentView(_bind.root)
+        _bind = DataBindingUtil.setContentView(this, R.layout.activity_add_update)
 
         productHelper = ProductHelper.getInstance(applicationContext)
         productHelper.open()

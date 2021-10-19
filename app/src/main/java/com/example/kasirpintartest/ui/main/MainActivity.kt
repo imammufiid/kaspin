@@ -7,6 +7,7 @@ import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kasirpintartest.R
@@ -52,8 +53,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _bind = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(_bind.root)
+        _bind = DataBindingUtil.setContentView(this, R.layout.activity_main)
         supportActionBar?.title = "Product"
 
         _bind.btnAdd.setOnClickListener(this)

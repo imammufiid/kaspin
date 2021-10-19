@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kasirpintartest.R
@@ -41,8 +42,7 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _bind = ActivityCheckoutBinding.inflate(layoutInflater)
-        setContentView(_bind.root)
+        _bind = DataBindingUtil.setContentView(this, R.layout.activity_checkout)
         supportActionBar?.title = getString(R.string.checkout_title)
 
         _bind.btnCancel.setOnClickListener(this)

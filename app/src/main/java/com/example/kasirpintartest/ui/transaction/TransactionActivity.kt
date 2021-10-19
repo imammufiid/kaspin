@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kasirpintartest.R
@@ -30,8 +31,7 @@ class TransactionActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _bind = ActivityTransactionBinding.inflate(layoutInflater)
-        setContentView(_bind.root)
+        _bind = DataBindingUtil.setContentView(this, R.layout.activity_transaction)
 
         supportActionBar?.title = getString(R.string.transaction)
         _bind.btnCheckout.setOnClickListener(this)

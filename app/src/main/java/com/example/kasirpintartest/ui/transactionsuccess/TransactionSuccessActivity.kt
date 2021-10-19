@@ -2,6 +2,8 @@ package com.example.kasirpintartest.ui.transactionsuccess
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.databinding.DataBindingUtil
+import com.example.kasirpintartest.R
 import com.example.kasirpintartest.databinding.ActivityTransactionSuccessBinding
 
 class TransactionSuccessActivity : AppCompatActivity() {
@@ -9,8 +11,7 @@ class TransactionSuccessActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _bind = ActivityTransactionSuccessBinding.inflate(layoutInflater)
-        setContentView(_bind.root)
+        _bind = DataBindingUtil.setContentView(this, R.layout.activity_transaction_success)
 
         _bind.btnHome.setOnClickListener {
             finish()
