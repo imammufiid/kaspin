@@ -38,6 +38,8 @@ class AddUpdateActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _bind = DataBindingUtil.setContentView(this, R.layout.activity_add_update)
+        _bind.viewmodel = viewModel
+        _bind.lifecycleOwner = this
 
         productHelper = ProductHelper.getInstance(applicationContext)
         productHelper.open()
@@ -115,27 +117,13 @@ class AddUpdateActivity : AppCompatActivity(), View.OnClickListener {
                 putExtra(EXTRA_PRODUCT, product)
             }
 
-            if (isEdit) {
-                intent.putExtra(EXTRA_POSITION, position)
-                val updateProduct = Product(id = product?.id, name = name, stock = stock.toInt())
-                viewModel.updateProduct(updateProduct)
-
-            } else {
-                val code = "BRG_${System.currentTimeMillis()}"
-                val date = getCurrentDate()
-
-                product?.date = date
-                product?.code = code
-
-                product?.let { viewModel.insertProduct(it) }
-
-            }
+//            if (isEdit) {
+//                intent.putExtra(EXTRA_POSITION, position)
+//                val updateProduct = Product(id = product?.id, name = name, stock = stock.toInt())
+//                viewModel.updateProduct(updateProduct)
+//
+//            }
         }
     }
 
-    private fun getCurrentDate(): String {
-        val dateFormat = SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault())
-        val date = Date()
-        return dateFormat.format(date)
-    }
 }
