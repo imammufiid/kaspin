@@ -54,6 +54,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _bind = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        _bind.viewmodel = viewModel
+        _bind.lifecycleOwner = this
+
         supportActionBar?.title = "Product"
 
         _bind.btnAdd.setOnClickListener(this)
@@ -63,19 +66,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         viewModel.getProducts()
     }
 
-//    override fun onResume() {
-//        super.onResume()
-//        viewModel.getProducts()
-//    }
-
     private fun observeVM() {
-        viewModel.loading.observe(this, {
-            if (it) {
-                _bind.progressbar.visibility = View.VISIBLE
-            } else {
-                _bind.progressbar.visibility = View.GONE
-            }
-        })
         viewModel.products.observe(this, {
             productAdapter.addData(it)
         })
@@ -119,7 +110,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         _bind.rvProducts.apply {
-            layoutManager = LinearLayoutManager(this@MainActivity)
+//            layoutManager = LinearLayoutManager(this@MainActivity)
             setHasFixedSize(true)
             adapter = productAdapter
         }
