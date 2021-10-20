@@ -1,34 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.transaction.TransactionActivity">
-    <ProgressBar
-        android:id="@+id/progressbar"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:visibility="invisible"
-        app:layout_anchor="@id/rv_products"
-        app:layout_anchorGravity="center" />
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_products"
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewmodel"
+            type="com.example.kasirpintartest.ui.transaction.TransactionViewModel" />
+    </data>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:listitem="@layout/transaction_item_layout" />
+        tools:context=".ui.transaction.TransactionActivity">
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/btn_checkout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="16dp"
-        android:text="Checkout"
-        android:visibility="gone"
-        android:contentDescription="@string/button_add_product" />
+        <ProgressBar
+            android:id="@+id/progressbar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:visibility="@{viewmodel.loading ? View.VISIBLE : View.GONE}"
+            app:layout_anchor="@id/rv_products"
+            app:layout_anchorGravity="center" />
 
-</RelativeLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_products"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:listitem="@layout/transaction_item_layout"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/btn_checkout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="16dp"
+            android:text="@{@string/checkout(viewmodel.checkout.size)}"
+            android:visibility="@{viewmodel.checkout.size > 0 ? View.VISIBLE : View.GONE}"
+            android:contentDescription="@string/button_add_product" />
+
+    </RelativeLayout>
+</layout>

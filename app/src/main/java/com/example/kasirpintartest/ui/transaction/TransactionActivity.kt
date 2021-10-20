@@ -32,6 +32,8 @@ class TransactionActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _bind = DataBindingUtil.setContentView(this, R.layout.activity_transaction)
+        _bind.viewmodel = viewModel
+        _bind.lifecycleOwner = this
 
         supportActionBar?.title = getString(R.string.transaction)
         _bind.btnCheckout.setOnClickListener(this)
@@ -42,24 +44,8 @@ class TransactionActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun observeVM() {
-        viewModel.loading.observe(this, {
-            if (it) {
-                _bind.progressbar.visibility = View.VISIBLE
-            } else {
-                _bind.progressbar.visibility = View.GONE
-            }
-        })
         viewModel.products.observe(this, { product ->
             transactionAdapter.addData(product.filter { it.stock!! > 0 })
-        })
-        viewModel.checkout.observe(this, { product ->
-            productCheckout = product
-            if (product.isNotEmpty()) {
-                _bind.btnCheckout.text = getString(R.string.checkout, product?.size)
-                _bind.btnCheckout.visibility = View.VISIBLE
-            } else {
-                _bind.btnCheckout.visibility = View.GONE
-            }
         })
     }
 
@@ -70,7 +56,6 @@ class TransactionActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         _bind.rvProducts.apply {
-            layoutManager = LinearLayoutManager(this@TransactionActivity)
             setHasFixedSize(true)
             adapter = transactionAdapter
         }

@@ -2,7 +2,9 @@ package com.example.kasirpintartest.ui.transaction
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.kasirpintartest.R
 import com.example.kasirpintartest.data.entity.Product
 import com.example.kasirpintartest.databinding.TransactionItemLayoutBinding
 
@@ -17,28 +19,25 @@ class TransactionAdapter(private val onClick: (Product) -> Unit) :
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionAdapter.ViewHolder {
-        val binding =
-            TransactionItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        ViewHolder(
+            DataBindingUtil.inflate(
+                LayoutInflater.from(parent.context),
+                R.layout.transaction_item_layout,
+                parent,
+                false
+            )
+        )
 
     override fun onBindViewHolder(holder: TransactionAdapter.ViewHolder, position: Int) {
-        holder.bind(data[position])
+        holder.binding.product = data[position]
+        holder.binding.btnCart.setOnClickListener {
+            onClick(data[position])
+        }
     }
 
     override fun getItemCount() = data.size
 
-    inner class ViewHolder(private val binding: TransactionItemLayoutBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: Product) {
-            with(binding) {
-                tvItemName.text = data.name
-                tvItemCode.text = data.code
-                btnCart.setOnClickListener {
-                    onClick(data)
-                }
-            }
-        }
-    }
+    inner class ViewHolder(val binding: TransactionItemLayoutBinding) :
+        RecyclerView.ViewHolder(binding.root)
 }
