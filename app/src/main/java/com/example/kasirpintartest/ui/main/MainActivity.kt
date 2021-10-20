@@ -9,7 +9,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kasirpintartest.R
 import com.example.kasirpintartest.data.entity.Product
 import com.example.kasirpintartest.databinding.ActivityMainBinding
