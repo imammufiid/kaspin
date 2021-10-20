@@ -13,30 +13,49 @@ class AddUpdateViewModel(private val repo: RepositoryImpl) : ViewModel() {
     private var _inserted = MutableLiveData<Long>()
     val inserted: LiveData<Long> = _inserted
 
+    private val _product = MutableLiveData(Product())
+    val product: LiveData<Product> = _product
+
     val nameProduct = MutableLiveData<String>()
     val stock = MutableLiveData<String>()
+    private val isEdit = MutableLiveData(false)
 
-    fun updateProduct(product: Product) {
-        viewModelScope.launch {
-            val result = repo.updateProduct(product)
-            _updated.postValue(result.value)
-        }
+    fun setFieldFormParcelable(data: Product) {
+        isEdit.value = true
+        _product.value = data
+        nameProduct.value = data.name!!
+        stock.value = data.stock.toString()!!
     }
 
     fun saveProduct() {
         viewModelScope.launch {
-            val code = "BRG_${System.currentTimeMillis()}"
-            val date = DateHelper.getCurrentDate()
+            if (isEdit.value == true) {
+                // edit
+                val updatedProduct = Product(
+                    id = _product.value?.id,
+                    name = nameProduct.value,
+                    code = _product.value?.code,
+                    stock = stock.value?.toInt(),
+                    date = _product.value?.date
+                )
+                val result = repo.updateProduct(updatedProduct)
+                _product.postValue(updatedProduct)
+                _updated.postValue(result.value)
+            } else {
+                val code = "BRG_${System.currentTimeMillis()}"
+                val date = DateHelper.getCurrentDate()
 
-            val newProduct = Product(
-                name = nameProduct.value,
-                code = code,
-                stock = stock.value?.toInt(),
-                date = date
-            )
+                val newProduct = Product(
+                    name = nameProduct.value,
+                    code = code,
+                    stock = stock.value?.toInt(),
+                    date = date
+                )
 
-            val result = repo.insertProduct(newProduct)
-            _inserted.postValue(result.value)
+                val result = repo.insertProduct(newProduct)
+                _product.postValue(newProduct)
+                _inserted.postValue(result.value)
+            }
         }
     }
 }
