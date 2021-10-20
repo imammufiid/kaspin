@@ -23,7 +23,7 @@ class AddUpdateViewModel(private val repo: RepositoryImpl) : ViewModel() {
         }
     }
 
-    fun insertProduct() {
+    fun saveProduct() {
         viewModelScope.launch {
             val code = "BRG_${System.currentTimeMillis()}"
             val date = DateHelper.getCurrentDate()
