@@ -47,6 +47,9 @@ class TransactionActivity : AppCompatActivity(), View.OnClickListener {
         viewModel.products.observe(this, { product ->
             transactionAdapter.addData(product.filter { it.stock!! > 0 })
         })
+        viewModel.checkout.observe(this, {
+            productCheckout = it
+        })
     }
 
 

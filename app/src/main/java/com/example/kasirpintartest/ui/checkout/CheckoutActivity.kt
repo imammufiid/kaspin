@@ -94,20 +94,12 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         _bind.rvProducts.apply {
-            layoutManager = LinearLayoutManager(this@CheckoutActivity)
             setHasFixedSize(true)
             adapter = checkoutAdapter
         }
     }
 
     private fun observeVM() {
-        viewModel.loading.observe(this, {
-            if (it) {
-                _bind.progressbar.visibility = View.VISIBLE
-            } else {
-                _bind.progressbar.visibility = View.GONE
-            }
-        })
         viewModel.updated.observe(this, { result ->
             if (result <= 0) {
                 Toast.makeText(this, getString(R.string.failed_transaction), Toast.LENGTH_SHORT)
@@ -116,7 +108,6 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener {
             }
             startActivity(Intent(this, TransactionSuccessActivity::class.java))
             finish()
-
         })
     }
 
