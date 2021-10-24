@@ -2,57 +2,39 @@ package com.example.kasirpintartest.ui.order
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.lifecycle.ViewModelProvider
 import com.example.kasirpintartest.R
-import com.example.kasirpintartest.data.entity.Order
 import com.example.kasirpintartest.databinding.ActivityOrderBinding
 import com.example.kasirpintartest.ui.checkout.CheckoutActivity
+import com.example.kasirpintartest.viewmodel.ViewModelFactory
 import com.google.firebase.database.*
 
 class OrderActivity : AppCompatActivity() {
     private lateinit var _bind: ActivityOrderBinding
-    private lateinit var dbRef: DatabaseReference
     private lateinit var orderAdapter: OrderAdapter
+
+    private val viewModel by lazy {
+        ViewModelProvider(this, ViewModelFactory.getInstance(this))[OrderViewModel::class.java]
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _bind = DataBindingUtil.setContentView(this, R.layout.activity_order)
         supportActionBar?.title = "Order"
+        _bind.viewmodel = viewModel
+        _bind.lifecycleOwner = this
 
-        dbRef = FirebaseDatabase.getInstance().getReference("Orders")
         initRV()
         getOrder()
     }
 
     private fun getOrder() {
-        _bind.progressbar.visibility = View.VISIBLE
-        val orders: MutableList<Order> = mutableListOf()
-        dbRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                _bind.progressbar.visibility = View.GONE
-                if (snapshot.exists()) {
-                    _bind.tvMessage.visibility = View.GONE
-                    for (order in snapshot.children) {
-                        val productItem = order.getValue(Order::class.java)
-                        if (productItem != null) {
-                            orders.add(productItem)
-                        }
-                    }
-                    orderAdapter.addData(orders)
-                } else {
-                    _bind.tvMessage.visibility = View.VISIBLE
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                _bind.progressbar.visibility = View.GONE
-                Toast.makeText(this@OrderActivity, error.message, Toast.LENGTH_SHORT).show()
-            }
+        viewModel.getOrder()
+        viewModel.order.observe(this, {
+            orderAdapter.addData(it)
         })
     }
 
@@ -75,7 +57,7 @@ class OrderActivity : AppCompatActivity() {
                     .setCancelable(false)
                     .setNegativeButton(getString(R.string.no)) { dialog, _ -> dialog.cancel() }
                     .setPositiveButton(getString(R.string.yes)) { _, _ ->
-                        dbRef.child(order.id.toString()).removeValue()
+                        // dbRef.child(order.id.toString()).removeValue()
                         orderAdapter.removeItem(position)
                     }
                 val alertDialog = alertDialogBuilder.create()
@@ -86,7 +68,6 @@ class OrderActivity : AppCompatActivity() {
         }
 
         _bind.rvOrder.apply {
-            layoutManager = LinearLayoutManager(this@OrderActivity)
             setHasFixedSize(true)
             adapter = orderAdapter
         }
