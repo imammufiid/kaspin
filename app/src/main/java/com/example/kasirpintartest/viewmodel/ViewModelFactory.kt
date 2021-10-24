@@ -9,6 +9,7 @@ import com.example.kasirpintartest.ui.addupdate.AddUpdateActivity
 import com.example.kasirpintartest.ui.addupdate.AddUpdateViewModel
 import com.example.kasirpintartest.ui.checkout.CheckoutViewModel
 import com.example.kasirpintartest.ui.main.MainViewModel
+import com.example.kasirpintartest.ui.order.OrderViewModel
 import com.example.kasirpintartest.ui.transaction.TransactionViewModel
 
 class ViewModelFactory private constructor(private val repo: RepositoryImpl) :
@@ -28,6 +29,7 @@ class ViewModelFactory private constructor(private val repo: RepositoryImpl) :
             modelClass.isAssignableFrom(TransactionViewModel::class.java) -> TransactionViewModel(repo) as T
             modelClass.isAssignableFrom(CheckoutViewModel::class.java) -> CheckoutViewModel(repo) as T
             modelClass.isAssignableFrom(AddUpdateViewModel::class.java) -> AddUpdateViewModel(repo) as T
+            modelClass.isAssignableFrom(OrderViewModel::class.java) -> OrderViewModel(repo) as T
             else -> throw Throwable("Unknown ViewModel Class: ${modelClass.name}")
         }
     }
