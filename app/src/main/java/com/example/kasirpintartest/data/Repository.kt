@@ -11,5 +11,6 @@ interface Repository {
     suspend fun updateStock(product: Product, qty: Int): LiveData<Int>
     suspend fun updateProduct(product: Product): LiveData<Int>
     suspend fun insertProduct(product: Product): LiveData<Long>
-    suspend fun orders(callback: (Resource<List<Order>>) -> Unit)
+    suspend fun getOrders(callback: (Resource<List<Order>>) -> Unit)
+    suspend fun removeOrder(id: String)
 }

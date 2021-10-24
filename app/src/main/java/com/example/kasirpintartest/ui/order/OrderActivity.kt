@@ -57,7 +57,7 @@ class OrderActivity : AppCompatActivity() {
                     .setCancelable(false)
                     .setNegativeButton(getString(R.string.no)) { dialog, _ -> dialog.cancel() }
                     .setPositiveButton(getString(R.string.yes)) { _, _ ->
-                        // dbRef.child(order.id.toString()).removeValue()
+                        viewModel.removeOrder(order.id.toString())
                         orderAdapter.removeItem(position)
                     }
                 val alertDialog = alertDialogBuilder.create()

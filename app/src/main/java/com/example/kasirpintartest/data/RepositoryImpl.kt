@@ -1,5 +1,6 @@
 package com.example.kasirpintartest.data
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.kasirpintartest.data.entity.Order
@@ -7,8 +8,10 @@ import com.example.kasirpintartest.data.entity.Product
 import com.example.kasirpintartest.data.remote.RemoteDataSource
 import com.example.kasirpintartest.vo.Resource
 import com.google.firebase.database.*
+import java.lang.Exception
 
-class RepositoryImpl(private val local: LocalDataSource, private val remote: RemoteDataSource) : Repository {
+class RepositoryImpl(private val local: LocalDataSource, private val remote: RemoteDataSource) :
+    Repository {
     companion object {
         @Volatile
         private var instance: RepositoryImpl? = null
@@ -54,7 +57,7 @@ class RepositoryImpl(private val local: LocalDataSource, private val remote: Rem
         return result
     }
 
-    override suspend fun orders(callback: (Resource<List<Order>>) -> Unit) {
+    override suspend fun getOrders(callback: (Resource<List<Order>>) -> Unit) {
         val orders: MutableList<Order> = mutableListOf()
         val dbRef = FirebaseDatabase.getInstance().getReference("Orders")
         dbRef.addValueEventListener(object : ValueEventListener {
@@ -76,5 +79,14 @@ class RepositoryImpl(private val local: LocalDataSource, private val remote: Rem
                 callback(Resource.error(error.message, orders))
             }
         })
+    }
+
+    override suspend fun removeOrder(id: String) {
+        val dbRef = FirebaseDatabase.getInstance().getReference("Orders")
+        try {
+            dbRef.child(id).removeValue()
+        } catch (e: Exception) {
+            Log.d("MY_ERROR", e.message.toString())
+        }
     }
 }
