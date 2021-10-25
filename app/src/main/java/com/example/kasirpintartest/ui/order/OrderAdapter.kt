@@ -37,6 +37,8 @@ class OrderAdapter(private val onClick: (Order, Int, Int) -> Unit) :
 
     override fun onBindViewHolder(holder: OrderAdapter.ViewHolder, position: Int) {
         holder.binding.order = data[position]
+        holder.binding.btnLoad.setOnClickListener { onClick(data[position], LOAD, position) }
+        holder.binding.btnDelete.setOnClickListener { onClick(data[position], DELETE, position) }
     }
 
     override fun getItemCount() = data.size
