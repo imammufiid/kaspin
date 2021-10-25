@@ -11,7 +11,7 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component
+@Component(modules = [RepoModule::class])
 interface AppComponent {
     @Component.Factory
     interface Factory {

@@ -4,13 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.kasirpintartest.data.RepositoryImpl
+import com.example.kasirpintartest.data.Repository
 import com.example.kasirpintartest.data.entity.Order
 import com.example.kasirpintartest.vo.Status
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class OrderViewModel @Inject constructor(private val repo: RepositoryImpl) : ViewModel() {
+class OrderViewModel @Inject constructor(private val repo: Repository) : ViewModel() {
     private var _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
 

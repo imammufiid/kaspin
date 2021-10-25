@@ -1,13 +1,16 @@
 package com.example.kasirpintartest.ui.addupdate
 
-import androidx.lifecycle.*
-import com.example.kasirpintartest.data.RepositoryImpl
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.kasirpintartest.data.Repository
 import com.example.kasirpintartest.data.entity.Product
 import com.example.kasirpintartest.helper.DateHelper
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class AddUpdateViewModel @Inject constructor(private val repo: RepositoryImpl) : ViewModel() {
+class AddUpdateViewModel @Inject constructor(private val repo: Repository) : ViewModel() {
     private var _updated = MutableLiveData<Int>()
     val updated: LiveData<Int> = _updated
 
@@ -25,7 +28,7 @@ class AddUpdateViewModel @Inject constructor(private val repo: RepositoryImpl) :
         isEdit.value = true
         _product.value = data
         nameProduct.value = data.name!!
-        stock.value = data.stock.toString()!!
+        stock.value = data.stock.toString()
     }
 
     fun saveProduct() {
