@@ -5,16 +5,9 @@ import com.example.kasirpintartest.data.db.DatabaseContract
 import com.example.kasirpintartest.data.db.ProductHelper
 import com.example.kasirpintartest.data.entity.Product
 import com.example.kasirpintartest.helper.MappingHelper
+import javax.inject.Inject
 
-class LocalDataSource(private val productHelper: ProductHelper) {
-    companion object {
-        @Volatile
-        private var instance: LocalDataSource? = null
-        fun getInstance(productHelper: ProductHelper): LocalDataSource =
-            instance ?: synchronized(this) {
-                instance ?: LocalDataSource(productHelper)
-            }
-    }
+class LocalDataSource @Inject constructor(private val productHelper: ProductHelper) {
 
     fun getProducts(): ArrayList<Product> {
         var result = ArrayList<Product>()

@@ -9,17 +9,12 @@ import com.example.kasirpintartest.data.remote.RemoteDataSource
 import com.example.kasirpintartest.vo.Resource
 import com.google.firebase.database.*
 import java.lang.Exception
+import javax.inject.Inject
 
-class RepositoryImpl(private val local: LocalDataSource, private val remote: RemoteDataSource) :
-    Repository {
-    companion object {
-        @Volatile
-        private var instance: RepositoryImpl? = null
-        fun getInstance(local: LocalDataSource, remote: RemoteDataSource): RepositoryImpl =
-            instance ?: synchronized(this) {
-                instance ?: RepositoryImpl(local, remote)
-            }
-    }
+class RepositoryImpl @Inject constructor(
+    private val local: LocalDataSource,
+    private val remote: RemoteDataSource
+) : Repository {
 
     override suspend fun getProducts(): LiveData<List<Product>> {
         val result = MutableLiveData<List<Product>>()

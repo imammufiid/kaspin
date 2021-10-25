@@ -7,8 +7,9 @@ import android.database.sqlite.SQLiteDatabase
 import com.example.kasirpintartest.data.db.DatabaseContract.ProductColumns.Companion.TABLE_NAME
 import com.example.kasirpintartest.data.db.DatabaseContract.ProductColumns.Companion._ID
 import java.sql.SQLException
+import javax.inject.Inject
 
-class ProductHelper(context: Context) {
+class ProductHelper @Inject constructor(context: Context) {
     private var dataBaseHelper: DatabaseHelper = DatabaseHelper(context)
     private lateinit var database: SQLiteDatabase
 
