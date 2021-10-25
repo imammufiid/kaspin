@@ -7,11 +7,11 @@ import com.example.kasirpintartest.data.db.ProductHelper
 import com.example.kasirpintartest.data.RepositoryImpl
 
 object Injection {
-    fun provideRepository(context: Context): RepositoryImpl {
-        val productHelper = ProductHelper.getInstance(context)
-        val localDataSource = LocalDataSource.getInstance(productHelper)
-        val remoteDataSource = RemoteDataSource.getInstance()
-
-        return RepositoryImpl.getInstance(localDataSource, remoteDataSource)
-    }
+//    fun provideRepository(context: Context): RepositoryImpl {
+//        val productHelper = ProductHelper.getInstance(context)
+//        val localDataSource = LocalDataSource.getInstance(productHelper)
+//        val remoteDataSource = RemoteDataSource.getInstance()
+//
+//        return RepositoryImpl.getInstance(localDataSource, remoteDataSource)
+//    }
 }
