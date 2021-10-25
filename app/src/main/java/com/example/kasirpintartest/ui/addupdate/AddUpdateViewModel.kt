@@ -5,8 +5,9 @@ import com.example.kasirpintartest.data.RepositoryImpl
 import com.example.kasirpintartest.data.entity.Product
 import com.example.kasirpintartest.helper.DateHelper
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class AddUpdateViewModel(private val repo: RepositoryImpl) : ViewModel() {
+class AddUpdateViewModel @Inject constructor(private val repo: RepositoryImpl) : ViewModel() {
     private var _updated = MutableLiveData<Int>()
     val updated: LiveData<Int> = _updated
 

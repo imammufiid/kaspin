@@ -10,26 +10,32 @@ import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.kasirpintartest.MyApplication
 import com.example.kasirpintartest.R
 import com.example.kasirpintartest.data.entity.ProductCheckout
 import com.example.kasirpintartest.databinding.ActivityTransactionBinding
 import com.example.kasirpintartest.ui.checkout.CheckoutActivity
 import com.example.kasirpintartest.ui.order.OrderActivity
 import com.example.kasirpintartest.viewmodel.ViewModelFactory
+import javax.inject.Inject
 
 class TransactionActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var _bind: ActivityTransactionBinding
     private lateinit var transactionAdapter: TransactionAdapter
     private var productCheckout: List<ProductCheckout> = listOf()
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
     private val viewModel by lazy {
         ViewModelProvider(
             this,
-            ViewModelFactory.getInstance(this)
+            viewModelFactory
         )[TransactionViewModel::class.java]
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        (application as MyApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
         _bind = DataBindingUtil.setContentView(this, R.layout.activity_transaction)
         _bind.viewmodel = viewModel

@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.example.kasirpintartest.MyApplication
 import com.example.kasirpintartest.R
 import com.example.kasirpintartest.data.db.DatabaseContract
 import com.example.kasirpintartest.data.db.ProductHelper
@@ -17,11 +18,14 @@ import com.example.kasirpintartest.databinding.ActivityAddUpdateBinding
 import com.example.kasirpintartest.viewmodel.ViewModelFactory
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
 class AddUpdateActivity : AppCompatActivity() {
     private lateinit var _bind: ActivityAddUpdateBinding
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
     private val viewModel by lazy {
-        ViewModelProvider(this, ViewModelFactory.getInstance(this))[AddUpdateViewModel::class.java]
+        ViewModelProvider(this, viewModelFactory)[AddUpdateViewModel::class.java]
     }
 
     private var isEdit = false
@@ -36,6 +40,7 @@ class AddUpdateActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        (application as MyApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
         _bind = DataBindingUtil.setContentView(this, R.layout.activity_add_update)
         _bind.viewmodel = viewModel

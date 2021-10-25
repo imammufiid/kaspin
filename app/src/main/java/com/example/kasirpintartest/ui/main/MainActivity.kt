@@ -9,20 +9,25 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.example.kasirpintartest.MyApplication
 import com.example.kasirpintartest.R
 import com.example.kasirpintartest.data.entity.Product
 import com.example.kasirpintartest.databinding.ActivityMainBinding
 import com.example.kasirpintartest.ui.addupdate.AddUpdateActivity
 import com.example.kasirpintartest.viewmodel.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var _bind: ActivityMainBinding
     private lateinit var productAdapter: ProductAdapter
     private var position: Int = 0
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
     private val viewModel by lazy {
-        ViewModelProvider(this, ViewModelFactory.getInstance(this))[MainViewModel::class.java]
+        ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
     }
 
     val resultLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
@@ -51,6 +56,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        (application as MyApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
         _bind = DataBindingUtil.setContentView(this, R.layout.activity_main)
         _bind.viewmodel = viewModel

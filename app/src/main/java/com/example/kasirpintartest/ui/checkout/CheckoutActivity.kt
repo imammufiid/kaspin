@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.kasirpintartest.MyApplication
 import com.example.kasirpintartest.R
 import com.example.kasirpintartest.data.entity.Order
 import com.example.kasirpintartest.data.entity.ProductCheckout
@@ -20,6 +21,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.*
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
 class CheckoutActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var _bind: ActivityCheckoutBinding
@@ -30,6 +32,9 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener {
     private var isLocalSource: Boolean? = true
     private var orderID: String? = ""
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
     companion object {
         const val PRODUCTS_EXTRAS = "products_extras"
         const val IS_LOCAL = "is_local"
@@ -37,10 +42,11 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private val viewModel by lazy {
-        ViewModelProvider(this, ViewModelFactory.getInstance(this))[CheckoutViewModel::class.java]
+        ViewModelProvider(this, viewModelFactory)[CheckoutViewModel::class.java]
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        (application as MyApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
         _bind = DataBindingUtil.setContentView(this, R.layout.activity_checkout)
         supportActionBar?.title = getString(R.string.checkout_title)

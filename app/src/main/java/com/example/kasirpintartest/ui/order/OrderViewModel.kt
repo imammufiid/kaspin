@@ -8,8 +8,9 @@ import com.example.kasirpintartest.data.RepositoryImpl
 import com.example.kasirpintartest.data.entity.Order
 import com.example.kasirpintartest.vo.Status
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class OrderViewModel(private val repo: RepositoryImpl) : ViewModel() {
+class OrderViewModel @Inject constructor(private val repo: RepositoryImpl) : ViewModel() {
     private var _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
 
