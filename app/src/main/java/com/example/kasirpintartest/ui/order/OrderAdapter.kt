@@ -45,25 +45,10 @@ class OrderAdapter(private val onClick: (Order, Int, Int) -> Unit) :
 
     inner class ViewHolder(val binding: OrderItemBinding) :
         RecyclerView.ViewHolder(binding.root)
-//    {
-//        fun bind(data: Order)
-//        {
-//            with(binding) {
-//                tvOrderId.text = data.id.toString()
-//                btnLoad.setOnClickListener {
-//                    onClick(data, LOAD, adapterPosition)
-//                }
-//                btnDelete.setOnClickListener {
-//                    onClick(data, DELETE, adapterPosition)
-//                }
-//            }
-//        }
-//    }
 
     fun removeItem(position: Int) {
         this.data.removeAt(position)
         notifyItemRemoved(position)
         notifyItemRangeChanged(position, this.data.size)
-        notifyDataSetChanged()
     }
 }
